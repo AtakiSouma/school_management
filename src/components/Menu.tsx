@@ -1,3 +1,4 @@
+import { role } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -116,7 +117,6 @@ const menuItems = [
   },
 ];
 
-
 const Menu = () => {
   return (
     <div className="mt-4 text-sm">
@@ -126,16 +126,22 @@ const Menu = () => {
             {" "}
             {i.title}
           </span>
-          {i.items.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="flex items-center justify-center gap-4 text-gray-500 py-2 lg:justify-start "
-            >
-              <Image src={item.icon} alt="" width={20} height={20} />
-              <span className="hidden lg:block">{item.label}</span>
-            </Link>
-          ))}
+          {i.items.map((item) => {
+            if (item.visible.includes(role)) {
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="flex items-center justify-center gap-4 text-gray-500 py-2 lg:justify-start
+                  rounded-md  hover:bg-lamaSky px-2
+                  "
+                >
+                  <Image src={item.icon} alt="" width={20} height={20} />
+                  <span className="hidden lg:block">{item.label}</span>
+                </Link>
+              );
+            }
+          })}
         </div>
       ))}
     </div>
